@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="tr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SurfaceLab · Çatlak Dedektörü</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"><script src="{{ url_for('static', filename='app.js') }}" defer></script></head>
+<body>
+<header><a href="/" class="brand"><span class="mark">S</span>SurfaceLab</a><span class="tag">OPENCV + FLASK</span></header>
+<main>
+<section class="intro"><p class="eyebrow">PROJE 05 / GÖRÜNTÜ İŞLEME</p><h1>Yüzeydeki izi<br><em>görünür kıl.</em></h1><p class="lead">Üretim hattı yüzeylerinde çatlak ve çizik adaylarını bul.<br>Görseli yükle, kenarları incele, sonucu karşılaştır.</p></section>
+<div class="workspace">
+<aside class="panel"><div class="section-title"><span>01</span><h2>İncelemeyi başlat</h2></div>
+<form id="inspect-form">
+<label class="upload" for="image"><span class="upload-icon">↥</span><strong>Bir yüzey görseli seç</strong><span id="filename">JPEG / PNG · İstek sınırı 8 MB</span><input type="file" id="image" name="image" accept="image/png,image/jpeg"></label>
+<p class="helper">Ya da sentetik bir örnekle dene:</p>
+<div class="demos"><button type="button" data-demo="clean">Temiz yüzey</button><button type="button" data-demo="crack">Çatlak</button><button type="button" data-demo="scratch">Çizik</button></div>
+<div class="parameters"><h3>Analiz ayarları</h3><div class="two">
+<label>Alt eşik<input type="number" name="low" min="0" max="254" value="50" required></label>
+<label>Üst eşik<input type="number" name="high" min="1" max="255" value="130" required></label>
+<label>Min. uzunluk (px)<input type="number" name="min_length" min="10" max="1000" value="60" required></label>
+<label>Min. uzunluk/en<input type="number" name="min_elongation" min="1" max="20" step="0.1" value="3" required></label></div>
+<label>Kenar payı (%)<input type="number" name="margin" min="0" max="30" value="8" required></label>
+<p class="helper">Uzunluk, analiz görselinin piksel ölçeğindedir. Kenar payı, ürün sınırlarını inceleme dışında bırakır.</p></div>
+<button type="submit" class="primary">Görseli analiz et <span>→</span></button>
+</form>
+<p id="error" class="error" role="alert" hidden></p>
+<div class="note"><strong>Bir ön inceleme aracı.</strong><p>İşaretlenen izler kusur adayıdır. Baskı, birleşim çizgileri ve dokular da işaretlenebilir. Aday bulunmaması, yüzeyin kusursuz olduğunu doğrulamaz.</p></div>
+</aside>
+<section class="panel results" aria-live="polite"><div class="section-title"><span>02</span><h2>İnceleme sonucu</h2><span id="state" class="state">HAZIR</span></div>
+<div id="empty"><div class="reticle"><span>+</span></div><h3>İlk incelemen burada görünecek.</h3><p>Bir görsel seç veya soldaki örneklerden birini dene.</p><div class="steps"><span>Gri tonlama</span><span>Canny</span><span>Kontur filtresi</span></div></div>
+<div id="output" hidden><div class="metrics"><div><span>Aday sayısı</span><strong id="count">—</strong></div><div><span>İşlem süresi</span><strong id="time">—</strong></div><div><span>Kenar yoğunluğu</span><strong id="density">—</strong></div></div>
+<p id="verdict" class="verdict"></p><div class="tabs" role="group" aria-label="Sonuç görseli"><button type="button" data-view="overlay" class="active">İşaretli sonuç</button><button type="button" data-view="edges">Canny kenarları</button><button type="button" data-view="original">Orijinal</button></div>
+<div class="image-stage"><img id="result-image" alt="Analiz sonucu"></div><div class="image-meta"><span id="dimensions"></span><a id="download" download="surfacelab-result.png">Görseli indir ↗</a></div>
+<div id="candidates"></div><p class="helper">Kırmızı: aday izler · Mavi: inceleme bölgesi. Süre; okuma, analiz ve görsel kodlamayı içerir, ağ aktarımını içermez.</p>
+</div></section>
+</div><footer>SurfaceLab <span>Matris işleme ile açıklanabilir yüzey incelemesi · Eğitim prototipi</span></footer>
+</main></body></html>

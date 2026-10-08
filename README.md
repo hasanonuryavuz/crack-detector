@@ -119,7 +119,7 @@ python -m pip install -r requirements-dev.txt
 python -m pytest -q
 ```
 
-Hazırlama ortamında **Python 3.12 ile 16 test geçti**. Testler temiz/çatlak/çizik ayrımını sentetik örneklerde, yükleme yolunu, hatalı dosyaları, hatalı parametreleri, istek ve piksel sınırlarını, büyük görsel ölçeklemesini, kısa iz filtresini ve bölge sınırı filtresini kapsar.
+GitHub Actions üzerinde Python 3.11 ile 18 test başarıyla geçti. Testler temiz/çatlak/çizik ayrımını sentetik örneklerde, yükleme yolunu, hatalı dosyaları, hatalı parametreleri, istek ve piksel sınırlarını, büyük görsel ölçeklemesini, kısa iz filtresini ve bölge sınırı filtresini kapsar.
 
 `.github/workflows/tests.yml`, depoya push veya pull request geldiğinde Python 3.11 ile testleri çalıştıracak şekilde tanımlanmıştır. GitHub üzerindeki çalışma sonucu, depoya yükleme sonrası Actions sekmesinden görülebilir.
 

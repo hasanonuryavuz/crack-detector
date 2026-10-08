@@ -91,3 +91,18 @@ def test_boundary_mark_excluded():
     image = np.full((600,900,3),180,np.uint8)
     cv2.line(image,(20,300),(300,300),(20,20,20),2)
     assert analyze(image,Settings(margin=8))["count"] == 0
+
+
+@pytest.mark.parametrize("size", [(180000, 64), (64, 180000)])
+def test_extremely_thin_upload(client, size):
+    from PIL import Image
+    buffer = BytesIO()
+    Image.new("RGB", size, "gray").save(buffer, format="PNG")
+    response = client.post(
+        "/api/analyze",
+        data={"image": (BytesIO(buffer.getvalue()), "thin.png")},
+    )
+    assert response.status_code == 200
+    expected = [1400, 1] if size[0] > size[1] else [1, 1400]
+    assert response.json["analysis_size"] == expected
+    assert response.json["count"] == 0

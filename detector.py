@@ -64,7 +64,7 @@ def analyze(image: np.ndarray, settings: Settings = Settings()) -> dict:
     original_height, original_width = image.shape[:2]
     scale = min(1.0, MAX_SIDE / max(original_height, original_width))
     if scale < 1:
-        image = cv2.resize(image, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
+        image = cv2.resize(image, (max(1, round(original_width * scale)), max(1, round(original_height * scale))), interpolation=cv2.INTER_AREA)
     height, width = image.shape[:2]
     mx, my = int(width * settings.margin / 100), int(height * settings.margin / 100)
     roi = image[my:height-my, mx:width-mx]
